@@ -1,0 +1,261 @@
+	<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Portfolio Artur Skrzeta</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<section id="header">
+				<header>
+					<span class="image avatar"><a href="https://arturskrzeta.github.io/"><img src="images/avatar.png" alt="" style="margin-bottom:0px"/></a></span>
+					<h1 id="logo"><a href="https://arturskrzeta.github.io/">Artur Skrzeta</a></h1>
+					<p>Data Analyst<br />
+					+4 years experience</p>
+				</header>
+				<nav id="nav">
+					<ul>
+						<li><a href="#one" class="active">Intro</a></li>
+						<li><a href="#two">Features</a></li>
+						<li><a href="#three">Demo</a></li>
+						<li><a href="#four">Setup</a></li>
+						<li><a href="#five">Source Code</a></li>
+					</ul>
+				</nav>
+				<footer>
+					<ul class="icons">
+						<li><a href="https://www.linkedin.com/in/artur-skrz%C4%99ta-010b23187/" class="icon brands fa-linkedin"><span class="label">LinkedIn</span></a></li>
+						<li><a href="https://www.instagram.com/arturskrrr/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						<li><a href="https://github.com/ArturSkrzeta" class="icon brands fa-github"><span class="label">Github</span></a></li>
+						<li><a href="mailto: arturskrzeta@gmail.com" class="icon solid fa-envelope"><span class="label">Email</span></a></li
+					</ul>
+				</footer>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- One -->
+							<section id="one">
+								<div class="container">
+									<header class="major">
+										<h2>Ansible for VM provisioning.</h2>
+										<h3>Intro</h3>
+
+										<h5>Vagrant:</h5>
+										<ul>
+											<li>Open-source tool that allows us to configure lightweight, reproducible, and portable virtual software development environments on top of virtualization with e.g. VirtualBox, VMware, Hyper-v, Docker or AWS.</li>
+											<li>Vagrant works based on a configuration file named “Vagrantfile” which is written in ruby.</li>
+										</ul>
+
+										<h5>Ansible:</h5>
+										<ul>
+											<li>We can use Ansible for automation of Vagrant machines requirements provision and software dependencies setup.</li>
+											<li>Ansible works with Playbooks written as YAML <b>YAML (Yet Another Markup Language)</b> files which provides <b>Infrastrucutre as a Code (IaC)</b>.
+											<li>Playbooks describe a desired state that we want to apply to a machine.</li>
+											<li>By providing a state I mean to configure the virtual machine according to the tasks listed in a Playbook.</li>
+											<li>Ansible allows you to write declarative code (YAML is a declarative language) in a playbook which means while inputting tasks you focus on <b>what</b> you want rather than <b>how</b> to achieve it. Then, tasks are processed by underlying code which is platform-specific procedural code.</li>
+											<li>In the Playbook we can configure a play for a specific host (virtual machine or server) or for all hosts.</li>
+										</ul>
+
+										<!-- <h5>6. Continuous monitoring:</h5>
+										<ul>
+											<li>...</li>
+										</ul> -->
+
+									</header>
+								</div>
+							</section>
+
+						<!-- Two -->
+							<section id="two">
+								<div class="container">
+									<h3>Features</h3>
+									<p>App includes following features:</p>
+									<ul class="feature-icons">
+										<li class="icon solid fa-check">Ansible</li>
+										<li class="icon solid fa-check">Vagrant</li>
+										<li class="icon solid fa-check">VirtualBox</li>
+										<li class="icon solid fa-check">Ubuntu</li>
+									</ul>
+								</div>
+							</section>
+
+						<!-- Three -->
+							<section id="three">
+								<div class="container">
+									<h3>Demo</h3>
+
+
+									<h5>Vagrant</h5>
+									<ol>
+										<li>Creating vagrant file with base ubuntu box:
+											<br>
+											<code>vagrant init -m bento/ubuntu-16.04</code><br>
+											- it gives us the basic vargant file with ubuntu vm box:
+<!-- start -->
+<pre style="margin-left:5px;">
+Vagrant.configure("2") do |<span style="color: #ffd600;">config</span>|
+  <span style="color: #ffd600;">config</span>.vm.box = "bento/ubuntu-16.04"
+end
+</pre>
+<!-- end  -->
+											<code>do |<span style="color: #ffd600;">config</span>|</code> means we load <b>Vagrant API ver. 2</b> and assign it to varaible named <b>config</b>.
+										</li>
+
+										<li>Extending basic vargant file with:
+											<br>
+											- port exposition,<br>
+											- anisible provisioner.
+<!-- start -->
+<pre style="margin-left:5px;">
+Vagrant.configure("2") do |<span style="color: #ffd600;">config</span>|
+
+  <span style="color: #ffd600;">config</span>.vm.box = "bento/ubuntu-16.04"
+
+  <span style="color: #ffd600;">config</span>.vm.network "forwarded_port", guest: 5000, host: 5000
+
+  <span style="color: #ffd600;">config</span>.vm.provision "ansible_local" do |<span style="color:#02ff00">ansible</span>|
+    <span style="color:#02ff00">ansible</span>.playbook = "setup.yml"
+  end
+end
+</pre>
+<!-- end  -->
+											- Installing and running Ansible on VirtualMachine (no need for running it on host computer).<br>
+											- Anisible provisioner provides the <b>setup.yml</b> playbook.
+										</li>
+										<li>Running ubuntu server box (Ubuntu VirtualMachine):
+											<br>
+											<code>vagrant up</code>
+										</li>
+										<li>When any changes to a playbook in vagrantfile then:
+											<br>
+											<code>vagrant provision</code>
+										</li>
+									</ol>
+
+									<h5>Ansible</h5>
+									<ul>
+										<li>With Anisible we can perform provisioning a Virtual Machine created with Vagrant.
+<!-- start -->
+<pre style="margin-left:5px;">
+---
+- hosts: all
+  become: yes
+  tasks:
+   - name: Install Python 3.6
+     apt:
+       name: python3.6
+       state: present
+       update_cache: yes
+</pre>
+<!-- end  -->
+											- We apply provisioning to all virtual machines with <code>hosts: all</code>.<br>
+											- Setting <code>become: yes</code> result with running tasks with sudo prefix on ubuntu's terminal.<br>
+											- First task we name <code>Install Python 3.6</code>.<br>
+											- Then we use <code>apt</code> to let using the apt module.<br>
+											- And then we indicate the name of package we want to insall: <code>name: python3.6</code>.<br>
+											- Setting the package's state to present on the machine by <code>state: present</code>.<br>
+											- Letting apt cache to update (command: apt update) before installing (command: apt install) with <code>update_cache: yes</code>.
+										</li>
+										<li>Creating virtual environment on Virtual Machine:
+<!-- start -->
+<pre style="margin-left:5px;">
+- name: Install pip3
+  apt:
+    name: python3-pip
+    state: present
+    update_cache: yes
+
+- name: Install 'virtualenv' package
+  pip:
+    name: virtualenv
+    executable: pip3
+
+- name: Create virtualenv
+  become: no
+  pip:
+    virtualenv: "/home/vagrant/venv"
+    virtualenv_python: python3.6
+    requirements: "/vagrant/requirements.txt"
+</pre>
+<!-- end  -->
+											There are following tasks:<br>
+											1. Pip3 installation with apt module.<br>
+											2. Virtual environment installation into ubuntu system's interpreter with Ansible's pip module.<br>
+											3. Creating virtual environment with pip moduel and requirements installation (Vagrant creates project directory /vagrant in the VM).
+										</li>
+										<li>Using modules apt_key and apt_repository in order to get Personal Package Archive (PPA) from where we can install Python.
+												Python 3.6 isn’t available from Ubuntu’s default package repositories.
+<!-- start -->
+<pre style="margin-left:5px;">
+- name: Add key for jonathonf PPA
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 4AB0F789CBA31744CC7DA76A8CF63AD3F06FC659
+    state: present
+
+- name: Add jonathonf PPA
+  apt_repository:
+    repo: deb http://ppa.launchpad.net/jonathonf/python-3.6/ubuntu xenial main
+    state: present
+</pre>
+<!-- end  -->
+											- we should be keeping above tasks above that ones related to Python's installation.
+										</li>
+									</ul>
+
+								</div>
+							</section>
+
+
+						<!-- Four -->
+							<section id="four">
+								<div class="container">
+									<h3>Setup</h3>
+
+									<h5>...:</h5>
+									<ul>
+										<li>...</li>
+									</ul>
+
+								</div>
+							</section>
+
+							<section id="five">
+								<div class="container">
+									<h3>Source Code</h3>
+									<p>You can view the source code: <a href="#">HERE</a></p>
+									<p>&nbsp</p>
+								</div>
+							</section>
+
+					</div>
+
+				<!-- Footer -->
+					<section id="footer">
+						<div class="container">
+							<a href="https://arturskrzeta.github.io/" style="padding-bottom:10px;">Back to Portfolio</a>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

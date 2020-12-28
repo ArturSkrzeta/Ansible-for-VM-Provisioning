@@ -52,7 +52,11 @@
 										<h5>Vagrant:</h5>
 										<ul>
 											<li>Open-source tool that allows us to configure lightweight, reproducible, and portable virtual software development environments on top of virtualization with e.g. VirtualBox, VMware, Hyper-v, Docker or AWS.</li>
-											<li>Vagrant works based on a configuration file named “Vagrantfile” which is written in ruby.</li>
+											<li>In short, it can use Virtual Box to provide and launch virtual machines.</li>
+											<li>All of the configuration necessary for machine launching is palced in one file named “Vagrantfile” which is written in Ruby.</li>
+											<li></li>
+											<li>Once machines launched, we can continue with further configuration with so-called provisioners like Ansible.</li>
+											<li>Provisioners are baing applied for provisioning hence installing dependencies, automation, configuration management and orchiestration.</li>
 										</ul>
 
 										<h5>Ansible:</h5>
@@ -64,6 +68,18 @@
 											<li>Ansible allows you to write declarative code (YAML is a declarative language) in a playbook which means while inputting tasks you focus on <b>what</b> you want rather than <b>how</b> to achieve it. Then, tasks are processed by underlying code which is platform-specific procedural code.</li>
 											<li>In the Playbook we can configure a play for a specific host (virtual machine or server) or for all hosts.</li>
 										</ul>
+
+										<h5>Workflow:</h5>
+										<ol>
+											<li>Creating Vagrantfile</li>
+											<li>Discribing the machine(s) type needed as well as all configuration and provision.</li>
+											<li>Running Vagrantfile creation.</li>
+											<li>Vagrant uses VirtualBox as a provider.</li>
+											<li>Vagrant invokes a provisioner to configure state of the machine(s).</li>
+											<li>The provisioner (Ansible) provisions the machine(s).</li>
+											<li>Developer can access machine with SHH.</li>
+											<li>All steps so far are automated and reusable</li>
+										</ol>
 
 										<!-- <h5>6. Continuous monitoring:</h5>
 										<ul>
